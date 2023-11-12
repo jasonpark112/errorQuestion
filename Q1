@@ -1,0 +1,54 @@
+package me.jihooo.springbootdeveloper;
+
+import com.fasterxml.jackson.annotation.JsonTypeId;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Getter
+@Entity
+
+public class Member {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false)
+    private Long id;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+}
+
+
+///
+
+
+package me.jihooo.springbootdeveloper;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class TestService {
+    @Autowired
+    MemberRepository memberRepository;
+
+    public List<Member> getAllMembers() {
+        return memberRepository.findAll();
+    }
+}
+
+
+///
+
+package me.jihooo.springbootdeveloper;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface MemberRepository extends JpaRepository<Member, Long> {
+}
